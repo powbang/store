@@ -2,7 +2,7 @@
   <div class="app-container">
 
 	<!-- 顶部 Header 区域 -->
-	<mt-header fixed title="黑马程序员·Vue项目">
+	<mt-header fixed title="vue商城项目">
 		<span slot="left" @click="goBack" v-show="flag">
 			<mt-button icon="back">返回</mt-button>
 		</span>

@@ -1,29 +1,19 @@
-// 入口文件
 import Vue from 'vue'
-// 1.1 导入路由的包
 import VueRouter from 'vue-router'
-// 1.2 安装路由
 Vue.use(VueRouter)
 
-// 注册 vuex
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
-// 每次刚进入 网站，肯定会调用 main.js 在刚调用的时候，先从本地存储中，把购物车的数据读出来，放到 store 中
 var car = JSON.parse(localStorage.getItem('car') || '[]')
 
 var store = new Vuex.Store({
-	state: { // this.$store.state.***
-		car: car,  // 将 购物车中的商品的数据，用一个数组存储起来，在 car 数组中，存储一些商品的对象， 咱们可以暂时将这个商品对象，设计成这个样子   
-		// { id:商品的id, count: 要购买的数量, price: 商品的单价，selected: false  }
+	state: { 
+		car: car,  
 	},
-	mutations: { // this.$store.commit('方法的名称', 按需传递唯一的参数)
+	mutations: { 
 		addToCar() {
-			// 点击加入购物车，把商品信息，保存到 store 中的 car 上
-      		// 分析：
-      		// 1. 如果购物车中，之前就已经有这个对应的商品了，那么，只需要更新数量
-			// 2. 如果没有，则直接把 商品数据，push 到 car 中即可
-			 
+			
 			// 假设 在购物车中，没有找到对应的商品
 			var flag = false
 
@@ -35,7 +25,6 @@ var store = new Vuex.Store({
 			  }
 			})
 
-			// 如果最终，循环完毕，得到的 flag 还是 false，则把商品数据直接 push 到 购物车中
 			if (!flag) {
 				state.car.push(goodsinfo)
 			}
@@ -44,8 +33,6 @@ var store = new Vuex.Store({
 			localStorage.setItem('car', JSON.stringify(state.car));
 		},
 		updateGoodsInfo(state, goodsinfo) {
-			// 修改购物车中商品
-			// 分析：
 			state.car.some(item => {
 				if(item.id == goodsinfo.id) {
 					item.count = parseInt(goodsinfo.count)
@@ -122,11 +109,8 @@ Vue.filter('dataFormat', function(dataStr, pattern = "YYYY-MM-DD HH:mm:ss") {
 	return moment(dataStr).format(pattern)
 })
 
-// 2.1 导入 vue-resource
 import VueResource from 'vue-resource'
-// 2.2 安装 vue-resource
 Vue.use(VueResource)
-// 设置请求的根路径
 Vue.http.options.root = 'http://vue.studyit.io'
 // 全局设置 post 时候表单数据格式组织形式   application/x-www-form-urlencoded
 Vue.http.options.emulateJSON = true;
@@ -137,13 +121,6 @@ import './lib/mui/css/mui.min.css'
 import './lib/mui/css/icons-extra.css'
 
 
-// 按需导入 Mint-UI 中的组件
-/* import { Header, Swipe, SwipeItem, Button, Lazyload } from 'mint-ui'
-Vue.component(Header.name, Header)
-Vue.component(Swipe.name, Swipe)
-Vue.component(SwipeItem.name, SwipeItem)
-Vue.component(Button.name, Button)
-Vue.use(Lazyload) */
 import MintUI from 'mint-ui'
 Vue.use(MintUI)
 import 'mint-ui/lib/style.css'
